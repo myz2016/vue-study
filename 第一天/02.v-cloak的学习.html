@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!--在没有使用 v-cloak 时，当 div 元素先加载，script 标签后加载并且网速慢的情况下，页面
+        会先显示 {{ msg }}，等到 vue.js 加载完后，才会显示 hello-->
+    <div id="app">
+        <!-- v-cloak 解决了插值表达式闪烁问题 -->
+        <p v-cloak>{{ msg }}</p>
+        
+        <h4 v-text="msg"></h4>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:"hello"
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-cloak>++++++++{{ msg }}--------</p>
+        <h4 v-text="msg">=============</h4>
+        <!-- v-text 默认没有闪烁问题 -->
+        <!-- v-text 会覆盖元素中原本的内容，但是 插值表达式 只会替换自己的这个占位符，不会把
+        整个元素的内容清空 -->
+        <!-- 使用 slow 3g 模式可以看到效果 -->
+
+        <p v-html="msg2"></p>
+
+        <!-- 当没有使用 v-bind: 指令时，title 属性的 mytitle 值，只是一个字符串
+        当使用 v-bind 指令时，title 属性的 mytitle 值是一个变量，也可以理解为是
+        一个表达式，比如：v-bind:title="mytitle + '123'"，会被解析为：哈哈哈123
+        如果使用了 v-bind 指令，并且还想让 title 属性的值是一个字符串，那么
+        就要将其值加上单引号 v-bind:title="'mytitle'" -->
+        <!-- v-bind: Vue 提供的属性绑定机制 -->
+        <!-- v-bind:指令被简写为: -->
+        <!-- v-bind:中可以写合法的 js 表达式 -->
+        <!-- <input type="button" value="click me" v-bind:title="mytitle"> -->
+        <input type="button" value="click me" :title="mytitle + ' 我好happy'">
+
+        <input type="button" value="v-on:指令" v-on:click="show">
+        <!-- v-on: Vue 提供事件绑定机制 -->
+        <!-- v-on: 可以简写为 @ -->
+        <p @mouseover="mouseOver">鼠标经过</p>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:"v-cloak与v-text的区别",
+                msg2:"<h1>v-html可以渲染html元素</h1>",
+                mytitle:"哈哈哈"
+            },
+            methods: {              //定义了当前 Vue 实例所有可用的方法
+                show() {            //ES6 语法
+                    alert("v-on:");
+                },
+                hide : function() { //ES5 语法
+                    alert("hidden");
+                },
+                mouseOver : function() {
+                    alert("鼠标经过事件");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

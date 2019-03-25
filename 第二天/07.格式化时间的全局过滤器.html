@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 快捷键：bs3-panel primary -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <!-- form-inline:显示到一行 -->
+            <div class="panel-body form-inline">
+                <label>
+                    <!-- form-control:表单控件 -->
+                    Id:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label>
+                    Name:
+                    <input type="text" class="form-control" v-model="name">
+                </label>
+                <!-- 在 vue 中使用事件绑定机制，为元素指定处理函数的时候，如果加了小括号，就可以给函数传参了 -->
+                <input type="button" value="添加" class="btn btn-primary" @click="add()">
+                <label>
+                    搜索名称关键字：
+                    <input type="text" class="form-control" v-model="keywords">
+                </label>
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keywords)" :key="item.id">
+                    <td>{{ item.id }}</td>
+                    <td v-text="item.name"></td>
+                    <td>{{ item.ctime | dateFormat('') }}</td>
+                    <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // 全局过滤器
+        //ES6 的新写法，形参赋默认值，防止 undefined，减少了方法体中的判断
+        Vue.filter('dateFormat', function (dateStr, pattern='') {
+            //根据给定的时间字符串，得到特定的时间
+            var date = new Date(dateStr);
+            var y = date.getFullYear();
+            //getMonth 从零开始，所以要加1
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            //陈旧的写法，推荐使用 ES6 模板字符串
+            //return y + '-' + m + '-' + d;
+            
+            //ES6 之前，需要判断 pattern 是否为 undefined 
+            // if (pattern && pattern.toLowerCase() === "yyyy-mm-dd") {
+            
+            if (pattern.toLowerCase() === "yyyy-mm-dd") {
+                // 模板字符串 ES6
+                return `${y}-${m}-${d}`;
+            } else {
+                var hh = date.getHours();
+                var mm = date.getMinutes();
+                var ss = date.getSeconds();
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
+            }
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                id: '',
+                name: '',
+                keywords: '',
+                list: [
+                    { id: 1, name: "帕加尼", ctime: new Date() },
+                    { id: 2, name: "玛莎拉蒂", ctime: new Date() }
+                ]
+            },
+            methods: {
+                add() {
+                    var car = { id: this.id, name: this.name, ctime: new Date() };
+                    this.list.push(car);
+                    this.id = this.name = '';
+                },
+                del(id) {
+                    this.list.some((item, i) => {
+                        if(item.id === id) {
+                            //splice 第一个参数：从第 i 个元素开始删除；第二个参数：删除元素的个数
+                            this.list.splice(i, 1);
+                            //在数组的 some 方法中，如果 return ture，就会立即终止这个数组的后续循环
+                            return true;
+                        }
+                    });
+                },
+                search(keywords) {
+                    var result = [];
+                    this.list.forEach(item => {
+                        if(item.name.indexOf(keywords) != -1) {
+                            result.push(item);
+                        }
+                    });
+                    return result;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

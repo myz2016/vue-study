@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <style>
+        .red {
+            color: red
+        }
+
+        .thin {
+            font-weight: 40
+        }
+
+        .italic {
+            font-style: italic
+        }
+
+        .active {
+            /* 适用于中文的字符间距 */
+            letter-spacing: 3em
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 一般的写法，在 class 中加入样式 -->
+        <!-- <h1 class="red thin">这是一个很大很大的h1，达到你无法想象!!!</h1> -->
+
+        <!-- v-bind: 绑定样式 -->
+        <!-- 与一般的写法相比，这里使用了 v-bind: 绑定属性，并传递了一个数组 -->
+        <!-- 注意，当使用了 v-bind:, class 中使用的样式要加上单引号，此时表示 red 是字符串，而不是变量 
+             如果不加单引号，vue 会去 data 中找对应名字的变量-->
+        <!-- 这种写法与普通的样式写法相比，没有什么优势，反而有点啰嗦 -->
+        <h1 :class="['red','thin']">这是一个很大很大的h1，达到你无法想象!!!</h1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {},
+            methods: {}
+        })
+    </script>
+</body>
+</html>

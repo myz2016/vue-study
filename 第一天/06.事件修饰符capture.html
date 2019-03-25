@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .inner {
+            height: 30px;
+            background-color: pink
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用 .capture 实现捕获触发的事件机制    -->
+        <!-- 当执行 inputHandle 方法时，先执行外面的 divHandle 方法，这就是捕获事件 -->
+        <div class="inner" @click.capture="divHandle">
+            <input type="button" value="戳他" @click="inputHandle"> 
+        </div>
+    </div>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                divHandle() {
+                    console.log("触发了 inner div 的点击事件");
+                },
+                inputHandle() {
+                    console.log("触发了 btn 的点击事件");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

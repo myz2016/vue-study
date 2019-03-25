@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- msgFormat 的参数，传递给了 function 的第二个参数以及后面的参数，所以可以传递多个参数 -->
+        <p>{{ msg | msgFormat('白痴', '你好') }}</p>
+    </div>
+    <script>
+        Vue.filter('msgFormat', function(_msg, newStr, arg) {
+            // newStr 值是 白痴
+            console.log(newStr);
+            return _msg.replace(/单纯/g, newStr + arg);
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人"
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 先调用第一个过滤器，然后调用第二个，直到所有的过滤器都执行完毕，把最终的结果返回到 p 标签里 -->
+        <p>{{ msg | msgFormat('白痴', '你好') | test('可以过滤多次')}}</p>
+    </div>
+    <script>
+        Vue.filter('msgFormat', function(_msg, newStr, arg) {
+            // newStr 值是 白痴
+            return _msg.replace(/单纯/g, newStr + arg);
+        });
+
+        Vue.filter('test', function(arg) {
+            return arg + "---我是第二个过滤器";
+        });
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人"
+            }
+        });
+    </script>
+
+</body>
+</html>

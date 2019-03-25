@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <style>
+        .red {
+            color: red
+        }
+
+        .thin {
+            font-weight: 40
+        }
+
+        .italic {
+            font-style: italic
+        }
+
+        .active {
+            /* 适用于中文的字符间距 */
+            letter-spacing: 3em
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用三元表达式控制样式 -->
+        <!-- 1.在 data 中定义一个 flag 标志
+             2.在样式中写三元表达式 -->
+        <!-- 注意：flag 没有加单引号，于是就找到了 data 中的 flag -->
+        <h1 :class="['red','thin', flag ? 'active' : '']">这是一个很大很大的h1，达到你无法想象!!!</h1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false
+            },
+            methods: {}
+        })
+    </script>
+</body>
+</html>

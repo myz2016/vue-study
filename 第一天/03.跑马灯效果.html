@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="浪起来" @click="lang">
+        <input type="button" value="低调" @click="stop">
+        <p>{{ msg }}</p>
+    </div>
+    <script>
+        // 注意：在 vm 实例中，如果想获取到 data 上的数据或者 methods 中的方法，必须通过
+        // this.数据属性名 或 this.方法名 来进行访问， 这里的 this，就表示我的 new 出来的 vm
+        // 实例对象
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "猥琐发育，别浪~~！",
+                handle: null
+            },
+            methods: {
+                lang() {
+                    if(this.handle == null) {
+                        // => 箭头语法
+                        // 使用箭头函数
+                        this.handle = setInterval(() => {
+                            //substring(0, 1); 从第0个索引开始，取一个字符
+                            var start = this.msg.substring(0, 1);
+                            //substring(1); 从第一个字符开始，一直到结尾
+                            var end = this.msg.substring(1);
+                            this.msg = end + start;
+                        }, 400)
+
+                        // 不使用箭头时，setInterval 大括号中的 this 代表匿名函数本身
+                        //不使用箭头函数
+                        // var _this = this;
+                        // this.handle = setInterval(function() {
+                        //     var start = _this.msg.substring(0, 1);
+                        //     var end = _this.msg.substring(1);
+                        //     _this.msg = end + start;
+                        // }, 400)
+                    }
+                },
+                stop() {
+                    clearInterval(this.handle);
+                    this.handle = null;
+                }
+                // 注意：vm 实例， 会监听自己身上 data 中所有数据的改变，只要数据一发生改变，就会自动把最新数据，从
+                // data 上同步到页面中去。[好处：只需关心数据，不需要关心页面的渲染，也就是不需要操作dom]
+            }
+        })
+    </script>
+</body>
+</html>

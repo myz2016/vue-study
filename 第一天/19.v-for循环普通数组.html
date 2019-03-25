@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            <p>{{ list[0] }}</p>
+            <p>{{ list[1] }}</p>
+            <p>{{ list[2] }}</p> -->
+
+            <!-- item 是每个元素值 -->
+            <!-- <p v-for='item in list'>{{ item }}</p> -->
+
+            <!-- 索引输出 -->
+            <p v-for='(item, index) in list'>索引：{{index}} ----> 值：{{item}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list: [1,2,3,4,5]
+            },
+            methods: {}
+        })
+    </script>
+</body>
+</html>

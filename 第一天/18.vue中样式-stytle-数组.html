@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 对象就是一个无序键值对的集合 -->
+        <!-- 如果属性名包含-，那么必须要加单引号 -->
+        <!-- <h1 :style={color:'red','font-weight':200}>这是一个很大很大的h1，达到你无法想象!!!</h1> -->
+        <h1 :style='[styleObj,styleObj1]'>这是一个很大很大的h1，达到你无法想象!!!</h1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                styleObj: {color:'red','font-weight':200},
+                styleObj1: {'font-style': 'italic'}
+            },
+            methods: {}
+        })
+    </script>
+</body>
+</html>

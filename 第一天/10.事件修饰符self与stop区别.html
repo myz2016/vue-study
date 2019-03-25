@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .inner {
+            height: 150px;
+            background-color: skyblue
+        }
+        .outer {
+            padding: 40px;
+            background-color: yellow
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="one" @click="oneDivHandle" class="outer">
+            <!-- 使用 .self， 输出：触发按钮点击事件 触发oneDivHanle点击事件 -->
+            <!-- 使用 .stop， 输出：触发按钮点击事件 触发twoDiv点击事件 -->
+            <!-- .self 只会阻止自己身上冒泡行为的触发，并不会真正阻止冒泡 -->
+            <div id="two" @click.stop="twoDivHandle" class="inner">
+                <input type="button" value="clickMe" @click="btnHandle">
+            </div>
+        </div>
+    </div>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                btnHandle() {
+                    console.log("触发按钮点击事件");
+                },
+                twoDivHandle() {
+                    console.log("触发twoDiv点击事件");
+                },
+                oneDivHandle() {
+                    console.log("触发oneDivHanle点击事件");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

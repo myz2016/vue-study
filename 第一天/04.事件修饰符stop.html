@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .inner {
+            height: 30px;
+            background-color: pink
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="inner" @click="divHandle">
+            <!-- 当执行 inputHandle 方法，由于冒泡机制，自动会执行 divHandle 方法 -->
+            <!-- 使用 .stop 阻止冒泡 -->
+            <input type="button" value="戳他" @click.stop="inputHandle"> 
+        </div>
+    </div>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                divHandle() {
+                    console.log("触发了 inner div 的点击事件");
+                },
+                inputHandle() {
+                    console.log("触发了 btn 的点击事件");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

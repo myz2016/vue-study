@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用名字是 msgFormat 的过滤器，将 msg 传递给管道符后面的方法的形参 _msg，方法执行完毕后，返回被
+        替换的字符串，然后显示在页面上 -->
+        <p>{{ msg | msgFormat }}</p>
+    </div>
+    <script>
+        // 定义一个名字是 msgFormat 的过滤器
+        Vue.filter('msgFormat', function(_msg) {
+            return _msg.replace(/单纯/g, '疯狂');
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人"
+            }
+        });
+    </script>
+
+</body>
+</html>
