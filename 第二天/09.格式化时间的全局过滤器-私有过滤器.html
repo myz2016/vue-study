@@ -33,7 +33,7 @@
                 <input type="button" value="添加" class="btn btn-primary" @click="add()">
                 <label>
                     搜索名称关键字：
-                    <input type="text" class="form-control" v-model="keywords" v-focus>
+                    <input type="text" class="form-control" v-model="keywords" v-focus v-color>
                 </label>
             </div>
         </div>
@@ -86,9 +86,22 @@
             // 表示元素插入到 dom 中的时候，会执行 inserted 函数 【触发一次】
             inserted: function (el) {
                 el.focus();
+                // 和 js 行为相关的操作，最好在 inserted 中去执行，防止 js 行为不生效
             },
             // 当 VNode 更新的时候，会执行 updated，可能会触发多次
             updated: function(el) {
+            }
+        });
+
+        // 自定义一个设置字体颜色的指令
+        Vue.directive('color', {
+            // 样式，只要通过指令绑定给了元素，不管这个元素有没有被插入到页面中去，这个元素肯定有了一个内联样式
+            // 将来元素肯定会显示到页面中，这时候，浏览器的渲染引擎必然会解析样式，应用给这个元素
+            bind: function(el) {
+                el.style.color = 'skyblue';
+            },
+            inserted: function(el) {
+
             }
         })
         var vm = new Vue({
