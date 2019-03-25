@@ -113,14 +113,15 @@
         function dateFormat(dateStr, pattern = '') {
             var date = new Date(dateStr);
             var y = date.getFullYear();
-            var m = date.getMonth() + 1;
+            var m = (date.getMonth() + 1).toString().padStart(2, '0');
             var d = date.getDate();
             if (pattern.toLowerCase() === "yyyy-mm-dd") {
                 return `${y}-${m}-${d}`;
             } else {
-                var hh = date.getHours();
-                var mm = date.getMinutes();
-                var ss = date.getSeconds();
+                //padStart 用来补位，第一个参数：最大长度；第二个参数：补位的样式
+                var hh = date.getHours().toString().padStart(2,'0');
+                var mm = date.getMinutes().toString().padStart(2,'0');
+                var ss = date.getSeconds().toString().padStart(2,'0');
                 return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
             }
         }
