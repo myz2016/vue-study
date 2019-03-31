@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/defaults.js"></script>
+    <script src="../lib/utils.js"></script>
+    <script src="../lib/axios.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Name:
+                    <input type="text" v-model='name' class='form-control'>
+                </label>
+                <input type="button" value="添加" @click='add' class="btn btn-primary">
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>code</th>
+                    <th>symbol</th>
+                    <th>rate</th>
+                    <th>description</th>
+                    <th>description</th>
+                    <th>rate_float</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <!-- "USD": {
+                        "code": "USD",
+                        "symbol": "&#36;",
+                        "rate": "3,910.7133",
+                        "description": "United States Dollar",
+                        "rate_float": 3910.7133
+                    } -->
+                <!-- key 只接受字符串或者number类型的值 -->
+                <tr v-for="item in info" :key='item.code'>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.symbol }}</td>
+                    <td>{{ item.rate }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.rate_float }}</td>
+                    <!-- <td><a href="#">删除</a></td> -->
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                name:'',
+                info:null
+            },
+            methods: {
+                add() {
+
+                }
+            },
+            mounted() {
+                axios
+                    .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+                    .then(response => (this.info = response.data.bpi))
+            }
+        })
+    </script>
+</body>
+
+</html>
