@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h4 v-text='msg'></h4>
+        <input type="text" v-bind:value='val'>
+        <!-- input 标签不能使用 v-text 属性，因为它是靠 value 属性设置值的 -->
+        <!-- h4 标签页不能使用 :value，因为它没有 value 属性值 -->
+    </div>
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:'我是文本消息',
+                val:'我是 input 标签的 val 值'
+            }
+        })
+    </script>
+</body>
+</html>
