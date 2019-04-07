@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <mycomp></mycomp>
+    </div>
+    <script>
+        Vue.component('mycomp', {
+            // template:"<h4>定义组件的第二种方式</h4>"
+
+            //以下定义方式会报错，因为组件只能有一个根元素，这种定义的方式就有了两个根元素
+            //可以使用 div 标签将 h1 和 span 标签合并到一起
+            // template:"<h1>合并的方式定义组件</h1><span>我是段落</span>"
+            
+            // 注意:无论是哪种方式创建出来的组件，组件的 template 属性指向的模板内容，必须有且只能有唯一个根元素
+            template:"<div><h1>合并的方式定义组件</h1><span>我是段落</span></div>"
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

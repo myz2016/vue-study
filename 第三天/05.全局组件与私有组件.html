@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <mycomp></mycomp>
+        <!-- 不能在这里使用，因为 login 是私有组件 -->
+        <!-- <login></login> -->
+    </div>
+    <hr>
+    <div id="app1">
+        <!-- 使用全局组件 -->
+        <mycomp></mycomp>
+        <login></login>
+        <register></register>
+    </div>
+    <template id="temp1">
+        <div>
+            <h1>在 vue 实例管辖的 div 的外部定义了一个 template 标签</h1>
+            <h3>这种方式定义有较高的灵活性</h3>
+        </div>
+    </template>
+
+    <template id='reg'>
+        <div>
+            <h3>我是注册组件</h3>
+        </div>
+    </template>
+    <script>
+        // 全局组件
+        Vue.component('mycomp', {
+            template:"#temp1"
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            }
+        });
+
+        var vm1 = new Vue({
+            el:"#app1",
+
+            data:{},
+            methods:{},
+            filters:{},
+            directives:{},
+            components:{ // 定义实例内部私有组件
+                login:{
+                    template:"<h1>这是私有的 login 组件</h1>"
+                },
+                register: {
+                    template:"#reg"
+                }
+            },
+            
+            // 生命周期函数
+            beforeCreate(){},
+            created(){},
+            beforeMount(){},
+            mounted(){},
+            beforeUpdate(){},
+            updated(){},
+            beforeDestory(){},
+            destoryed(){}
+        })
+        
+    </script>
+</body>
+
+</html>

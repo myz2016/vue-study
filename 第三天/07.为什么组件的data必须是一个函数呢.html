@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 当使用外部定义对象时，这三个 counter 共享 count，点击其中一个按钮，全部都会加1 -->
+        <!-- 当使用内部返回对象时，每一个 counter 的 count 是独立的 -->
+        <counter></counter>
+        <hr>
+        <counter></counter>
+        <hr>
+        <counter></counter>
+    </div>
+    <template id='temp'>
+        <div>
+            <input type="button" value="+1" @click='increment'>
+            <!-- 组件的 data 在这里使用 -->
+            <h2>{{count}}</h2>
+        </div>
+        
+    </template>
+    <script>
+        //在外部定义一个对象
+        var obj = {
+            count: 0    
+        }
+        Vue.component('counter', {
+            template: "#temp",
+            data: function () {
+                // 使用了外部定义的对象
+                // return obj;
+                // 内部返回对象
+                return {count:0};
+            },
+            methods: {
+                increment() {
+                    this.count++;
+                }
+            }
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: {}
+        });
+    </script>
+</body>
+
+</html>
