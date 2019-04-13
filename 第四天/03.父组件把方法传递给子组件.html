@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件向子组件传值，使用的是事件绑定机制 -->
+        <child-component @func='show'></child-component>
+        {{parentmsg}}
+    </div>
+    <template id="temp">
+        <div>
+            <h3>我是子组件</h3>
+            <input type="button" value="pressMe" @click='childComponentClick'>
+        </div>
+    </template>
+    <script>
+        var comp = {
+            template: "#temp",
+            data:function() {
+                return {
+                    childmsg:{
+                        name:"大头儿子",
+                        age:12
+                    }
+                }
+            },
+            methods: {
+                childComponentClick() {
+                    // func 是父组件中事件绑定中 @ 后面的名字
+                    // 从第二个参数开始，都可以传参
+                    //这也是一种将子组件数据传递给父组件的方式
+                    this.$emit('func', '我是从子组件传递过去的参数', this.childmsg);
+                }
+            }
+        }
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                parentmsg:null
+            },
+            methods: {
+                show(data1, data2) {
+                    // console.log("父组件的 show 方法被调用--->" + data1 + "=========" + "名字：" + data2.name + "，年龄：" + data2.age);
+                    this.parentmsg = data1 + "=====" + "名字：" + data2.name + "，年龄：" + data2.age;
+                }
+            },
+            components: {
+                childComponent: comp
+            }
+        })
+    </script>
+    <!-- 
+    childComponentClick 执行逻辑：
+    1、通过 this.$emit 触发绑定的 func，并传递了自身的数据
+    2、func 对应的是父组件的 show 方法
+    3、触发 父组件的 show 方法，接收到了子组件传递过来的数据
+    4、父组件的 parentmsg 被重新赋值了 -->
+</body>
+
+</html>

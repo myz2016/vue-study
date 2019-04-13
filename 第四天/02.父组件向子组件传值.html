@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件，在引用子组件的是，使用 v-bind: 的方式，将值传递给子组件 -->
+        <com1 v-bind:parentmsg='msg'></com1>
+    </div>
+    <script>
+        // vm 实例可以想象成是一个大组件
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg:"我相当于是父组件"
+            },
+            components:{
+                //子组件无法访问到父组件中的 data 上的数据和 methods 中的方法
+                com1: {
+                    // 子组件中的 data 并不是通过父组件传递过来了，而是子组件自身私有的，比如：子组件通过 ajax 请求回来的数据
+                    // 都可以放到 data 身上
+                    // data 上的数据，都是可读写的
+                    data:function() {
+                        return {
+                            title:'123',
+                            content:'good'
+                        }
+                    },
+                    template:"<h3 @click='changeParentMsg'>这是子组件 == -- {{parentmsg}}<input type='text' v-foucs></h3>",
+                    // 特殊，值是数组，不是对象
+                    // 把父组件传递过来的 parentmsg 属性先在 props 数组中定义一下，这样才能使用
+                    // 组件中的所有 props 中的数据，都是通过父组件传递给子组件的
+                    // props 中的数据都是只读的，无法重新赋值
+                    props:['parentmsg'],
+                    directives:{
+                        foucs:{
+                            bind:function() {},
+                            inserted:function(el){
+                                el.focus()
+                            }
+                        }
+                    },
+                    filters:{},
+                    components:{},
+                    methods:{
+                        //虽然此方法可以修改 parentmsg 的值，但是会有警告，不推荐这么做
+                        changeParentMsg:function() {
+                            this.parentmsg = '被修改了'
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
