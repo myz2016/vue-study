@@ -24,12 +24,12 @@
         <div>
             <div class="form-group">
                 <label>评论人：</label>
-                <input type="text" class='form-control' v-model='user'>
+                <input type="text" class='form-control' v-model='user' v-focus v-color="'skyblue'">
             </div>
 
             <div class="form-group">
                 <label>评论内容：</label>
-                <textarea class='form-control' v-model='content'></textarea>
+                <textarea class='form-control' v-model='content' @keyup.f2='comment' v-color="'pink'"></textarea>
             </div>
 
             <div class="form-group">
@@ -38,6 +38,7 @@
         </div>
     </template>
     <script>
+        Vue.config.keyCodes.f2 = 113;
         var commentBox = {
             template: "#temp",
             data: function () {
@@ -66,9 +67,20 @@
                     localStorage.setItem('cmts', JSON.stringify(list))
 
                     this.user = this.content = ''
-                    console.log(localStorage.getItem("cmts"));
                     this.$emit('func')
-                    localStorage.clear();
+                }
+            },
+            directives: {
+                'focus': {
+                    bind: function () { },
+                    inserted: function (el) {
+                        el.focus();
+                    }
+                },
+                'color': {
+                    bind: function (el, binding) {
+                        el.style.color = binding.value;
+                    }
                 }
             }
         }
@@ -81,6 +93,9 @@
                     { id: Date.now(), user: '马致远', content: '枯藤老树昏鸦，小桥流水人家' }
 
                 ]
+            },
+            created() {
+                this.addComment()
             },
             methods: {
                 addComment() {
