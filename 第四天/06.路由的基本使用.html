@@ -10,6 +10,13 @@
 </head>
 <body>
     <div id="app">
+            <!--注意要加#号-->
+            <a href="#/login">登陆</a>
+            <a href="#/register">注册</a>
+            <br><br>
+        <!--router-link默认渲染为一个a标签 可以用tag修改-->
+        <router-link to="/login" tag="span">登录</router-link>
+        <router-link to="/register">注册</router-link>
         <router-view></router-view>
     </div>
     <script>
@@ -33,6 +40,8 @@
                 // path:表示监听哪个路由链接地址
                 // component:表示如果路由前面是匹配到的 path，则表示 component 属性对应的那个组件
                 // 注意：component 的属性值，必须是一个 组件的模板对象，不能是组件的引用名称
+                // 页面刚显示时，默认跳转到登录组件
+                {path:"/", redirect:"/login"},
                 {path:"/login", component:login},
                 {path:"/register", component:register}
             ]
@@ -40,6 +49,7 @@
         let vm = new Vue({
             el:"#app",
             data:{},
+             //将路由规则对象， 注册到vm实例上，用来监听 URL 地址的变化，然后展示对应的组件
             router:routerObj
         })
     </script>
