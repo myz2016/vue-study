@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="获取元素" @click='getElement' ref="mybtn">
+        <h3 ref="myh3">人之初，性本善，性相近，习相远</h3>
+        <hr>
+        <login ref='myLogin'></login>
+    </div>
+    <script>
+        var loginComp = {
+            template:"<h3>登录组件</h3>"
+        }
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods:{
+                getElement() {
+                    console.log(this.$refs.myh3.innerText);
+                }
+            },
+            components:{
+                login:loginComp
+            }
+        });
+    </script>
+</body>
+
+</html>

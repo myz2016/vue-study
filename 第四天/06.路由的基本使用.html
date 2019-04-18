@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-view></router-view>
+    </div>
+    <script>
+        // 这里的 login 不能作为 component 的属性值，它就是下面提到的 组件的引用名称
+        // Vue.component('login',{
+        //     template:"<h3>登录组件</h3>"
+        // })
+        let login = {
+            template:"<h3>登录组件</h3>"
+        }
+        let register = {
+            template:"<h3>注册组件</h3>"
+        }
+        // 创建一个路由对象，当导入 vue-router.js 库之后，在 window 全局对象中，就有了一个路由的构造
+        // 函数，叫做 VueRouter
+        // 在 new 路由对象的时候，可以为构造函数传递一个配置对象
+        let routerObj = new VueRouter({
+            // 路由匹配规则
+            routes:[
+                // 每个路由的规则，都是一个对象，这个规则对象，身上有两个必要的属性
+                // path:表示监听哪个路由链接地址
+                // component:表示如果路由前面是匹配到的 path，则表示 component 属性对应的那个组件
+                // 注意：component 的属性值，必须是一个 组件的模板对象，不能是组件的引用名称
+                {path:"/login", component:login},
+                {path:"/register", component:register}
+            ]
+        })
+        let vm = new Vue({
+            el:"#app",
+            data:{},
+            router:routerObj
+        })
+    </script>
+</body>
+</html>
