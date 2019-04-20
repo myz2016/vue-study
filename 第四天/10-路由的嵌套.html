@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/account">To account component</router-link>
+        <router-view></router-view>
+    </div>
+    <template id="account">
+        <div>
+            <h3>Account component</h3>
+            <router-link to="/account/login">To login component</router-link>
+            <router-link to="/account/register">To login component</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+    <template id="login">
+        <div>
+            <h2>
+                Login component
+            </h2>
+        </div>
+    </template>
+    <script>
+        let account = {
+            template: "#account"
+        }
+        let login = {
+            template: "#login"
+        }
+        let register = {
+            template: "<h3>Register component</h3>"
+        }
+        let routerObj = new VueRouter({
+            routes: [
+                {
+                    path: "/account",
+                    component: account,
+                    // 使用 children 实现子路由，同时，子路由的 path 前面，不要加 /, 否则永远以根路径请求，
+                    // 不方便用户理解 url 地址
+                    children: [
+                        {
+                            path: "login",
+                            component: login
+                        },
+                        {
+                            path:"register",
+                            component:register
+                        }
+                    ]
+                }
+            ]
+        })
+        let app = new Vue({
+            el: "#app",
+            data: {},
+            router: routerObj
+        })
+    </script>
+</body>
+
+</html>

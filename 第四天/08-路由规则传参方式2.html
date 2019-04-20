@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/login/20/z3">Login</router-link>
+        <router-link to="/register">Register</router-link>
+        <router-view></router-view>
+    </div>
+    <script>
+        let login = {
+            template: "<h3>登录--->{{$route.params.id}}---->{{$route.params.name}}</h3>",
+            created(){
+                // $route对象内部有match属性，里面包含了正则表达式，通过这个正则表达式
+                // 解析 /login/20，将 20 匹配给了 id
+                console.log(this.$route);
+            }
+        }
+        let register = {
+            template:"<h3>注册</h3>"
+        }
+        let routerObj = new VueRouter({
+            routes:[
+                {path:"/", redirect:"/login"},
+                // 如果这里 path 路径是 /login/:id/:name
+                // router-link 中 to 的路径是 /login/20
+                // 那么点击 Login 时，将匹配不到，因为它不符合
+                // 路由匹配规则
+                // to 的路径必须是 /login/20/z3 时，才会匹配到这里
+                // 的 path
+                {path:"/login/:id/:name", component:login},
+                {path:"/register", component:register}
+            ]
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {},
+            router:routerObj
+        })
+    </script>
+</body>
+
+</html>

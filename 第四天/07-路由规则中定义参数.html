@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- url 中带有参数 id，进行路由规则匹配的时，找到了 component 组件，
+        组件中持有路由的一个引用 $route（不知道这么理解对不对）,
+        $route 里面有 query属性，进而找到了 id -->
+        <router-link to="/login?id=99&name=z2">登录</router-link>
+        <router-link to="/register">注册</router-link>
+        <router-view></router-view>
+    </div>
+    <script>
+        let login = {
+            template:"<h3>登录---->{{$route.query.id}}----->{{$route.query.name}}</h3>",
+        }
+        let register = {
+            template:"<h3>注册</h3>"
+        }
+        let routerObj = new VueRouter({
+            routes:[
+                {path:"/", redirect:"/login"},
+                {path:"/login", component:login},
+                {path:"/register", component:register}
+            ]
+        });
+        let vm = new Vue({
+            el:"#app",
+            data:{},
+            router:routerObj
+        })
+    </script>
+</body>
+</html>
