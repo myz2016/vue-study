@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <script src="/lib/vue-router.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- watch 属性在 “名称案例” 上没有显示出其优势，感觉直接使用 @keyUp 绑定事件更容易实现功能，但 watch 有
+        自己的特点。如，@keyUp 可以监听元素的数据（文本框），但如果要监视的东西是看不见摸不到的，就不可以绑定
+        @keyUp 事件了，比如监听路由地址的改变，此时就要使用 watch 属性进行非 Dom 元素事件的监视了。 -->
+    <div id="app">
+        <router-link to="/login">To login component</router-link>
+        <router-link to="/register">To register component</router-link>
+        <router-view></router-view>
+    </div>
+    <template id="login">
+        <div>
+            <h3>Login Component</h3>
+        </div>
+    </template>
+    <template id="register">
+            <div>
+                <h3>Register Component</h3>
+            </div>
+        </template>
+    <script>
+        let loginComp = {
+            template: "#login"
+        }
+        let registerComp = {
+            template: "#register"
+        }
+        let routerObj = new VueRouter({
+            routes: [
+                { path: "/login", component:loginComp },
+                { path: "/register", component: registerComp }
+            ]
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {},
+            router: routerObj,
+            watch:{
+                "$route.path":function(newValue, oldValue) {
+                    if(newValue === '/login') {
+                        console.log("welcome to login page");
+                    } else if(newValue === '/register') {
+                        console.log("welcome to register page");
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

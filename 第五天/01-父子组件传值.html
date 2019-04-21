@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <sub-comp :parentmsg="msg" @func='changeBaseMsg'></sub-comp>
+    </div>
+    <template id="subComp">
+        <div>
+            <input type="button" value="change base component msg" @click='change'>
+            <h3>Sub Component---->{{parentmsg}}</h3>
+        </div>
+    </template>
+    <script>
+        let subcomp = {
+            template: "#subComp",
+            props: ['parentmsg'],
+            data() {
+                return {
+                    submsg: "submsg"
+                }
+            },
+            methods: {
+                change: function () {
+                    this.$emit('func', this.submsg);
+                }
+            }
+        }
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "base component msg"
+            },
+            methods: {
+                changeBaseMsg: function (val) {
+                    this.msg = val;
+                }
+            },
+            components: {
+                subComp: subcomp
+            }
+        })
+    </script>
+</body>
+
+</html>

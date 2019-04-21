@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/lib/vue.js"></script>
+    <script src="/lib/vue-router.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/account">To account component</router-link>
+        <router-view></router-view>
+    </div>
+    <template id="account">
+        <div>
+            <h3>Account Component</h3>
+            <router-link to="/account/login">To login component</router-link>
+            <router-link to="/account/register">To register component</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+    <template id="login">
+        <div>
+            <label>用户名：</label>
+            <input type="text" v-focus v-color>
+            <label>密码：</label>
+            <input type="text" v-color="'red'">
+        </div>
+    </template>
+    <template id="register">
+        <div>Register Component--->{{msg | formatDate("yyyy-mm-dd")}}</div>
+    </template>
+    <script>
+        let loginComp = {
+            template: "#login",
+            directives: {
+                'focus': {
+                    bind: function () { },
+                    inserted: function (el) {
+                        el.focus();
+                    }
+                },
+                'color': {
+                    bind: function (el, binding = "") {
+                        if (binding.value) {
+                            el.style.color = binding.value;
+                        } else {
+                            el.style.color = 'pink'
+                        }
+                    }
+                }
+            }
+        }
+        let registerComp = {
+            template: "#register",
+            data() {
+                return {
+                    msg: new Date()
+                }
+            },
+            filters: {
+                formatDate: function (date, format="") {
+                    let _date = new Date(date);
+                    let year = _date.getFullYear();
+                    let month = (_date.getMonth() + 1).toString().padStart(2, "0");
+                    let tmp = `${year}-${month}`;
+                    if(format.toLowerCase() === "yyyy-mm-dd") {
+                        let day = _date.getDate().toString().padStart(2, "0");
+                        return tmp + `-${day}`;
+                    } else {
+                        return tmp;
+                    }
+                   
+                }
+            }
+        }
+        let accountComp = {
+            template: "#account"
+        }
+        let routerObj = new VueRouter({
+            routes: [
+                {
+                    path: "/account",
+                    component: accountComp,
+                    children: [
+                        { path: "login", component: loginComp },
+                        { path: "register", component: registerComp }
+                    ]
+                }
+            ]
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {},
+            router: routerObj
+        })
+    </script>
+</body>
+
+</html>
